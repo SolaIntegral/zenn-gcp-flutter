@@ -1,16 +1,30 @@
-# flutter_app1
+##1 GitHubリポジトリのページにアクセス
 
-A new Flutter project.
+共有されたリポジトリ（例: https://github.com/SolaIntegral/zenn-gcp-flutter）を開きます。
 
-## Getting Started
+##2「Code」ボタンをクリック
 
-This project is a starting point for a Flutter application.
+SSH または HTTPS のURLが表示されます。
 
-A few resources to get you started if this is your first Flutter project:
+例:
+SSH: git@github.com:SolaIntegral/zenn-gcp-flutter.git
+HTTPS: https://github.com/SolaIntegral/zenn-gcp-flutter.git
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+##3VS Codeを開く
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+##4ターミナルを開く
+
+Ctrl + ~（ショートカット）でターミナルを開きます。
+
+##5リポジトリをクローン
+git clone git@github.com:SolaIntegral/zenn-gcp-flutter.git
+
+または（HTTPSの場合）：
+
+git clone https://github.com/SolaIntegral/zenn-gcp-flutter.git
+
+##6プロジェクトディレクトリに移動
+cd zenn-gcp-flutter
+
+##7VS Codeでプロジェクトを開く
+code .
