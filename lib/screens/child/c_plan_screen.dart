@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
-import 'c_start_interest_screen.dart';  // 追加
 
-class CStartGradeScreen extends StatefulWidget {
-  const CStartGradeScreen({super.key});
+class CPlanScreen extends StatefulWidget {
+  const CPlanScreen({super.key});
 
   @override
-  State<CStartGradeScreen> createState() => _CStartGradeScreenState();
+  State<CPlanScreen> createState() => _CPlanScreenState();
 }
 
-class _CStartGradeScreenState extends State<CStartGradeScreen> {
-  int? selectedGrade; // 選択された学年を保持する変数
+class _CPlanScreenState extends State<CPlanScreen> {
+  int? selectedPlan; // 選択された予定を保持
 
-  final List<String> grades = [
-    '小学1年生',
-    '小学2年生',
-    '小学3年生',
-    '小学4年生',
-    '小学5年生',
-    '小学6年生',
+  final List<String> plans = [
+    '家にいる',
+    '塾に行く',
+    '友達と遊びに行く',
+    'よくなかった',
   ];
 
   @override
@@ -32,44 +29,43 @@ class _CStartGradeScreenState extends State<CStartGradeScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.brown, size: 30),
+          icon: Icon(Icons.arrow_back, color: Colors.brown, size: screenWidth * 0.08),
           onPressed: () => Navigator.pop(context),
         ),
-        toolbarHeight: 50,
       ),
       body: Stack(
         children: [
-          // スクロール可能なコンテンツ
+          // コンテンツ部分
           Padding(
             padding: EdgeInsets.only(bottom: screenHeight * 0.15),
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // 進捗バー
                     LinearProgressIndicator(
-                      value: 0.25, // 25% 完了
+                      value: 1.0,
                       backgroundColor: Colors.grey[300],
                       valueColor: const AlwaysStoppedAnimation(Color(0xFF1EC9A8)),
-                      minHeight: 10,
+                      minHeight: screenHeight * 0.015,
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: screenHeight * 0.03),
 
-                    // 質問テキストとキャラクター
+                    // 質問とキャラクター
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
                           child: Container(
-                            padding: const EdgeInsets.all(16),
+                            padding: EdgeInsets.all(screenWidth * 0.04),
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.grey),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: const Text(
-                              'きみの名前とがくねんを教えてね',
+                              'このあとの予定は？',
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -78,60 +74,31 @@ class _CStartGradeScreenState extends State<CStartGradeScreen> {
                             ),
                           ),
                         ),
-                        const SizedBox(width: 10),
+                        SizedBox(width: screenWidth * 0.03),
                         Image.asset(
                           'lib/assets/chara1.png',
-                          height: 80,
+                          height: screenHeight * 0.1,
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: screenHeight * 0.03),
 
-                    // 名前入力欄
-                    const Text(
-                      '名前',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        color: Colors.brown,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    TextField(
-                      decoration: InputDecoration(
-                        hintText: '名前を入力してください',
-                        filled: true,
-                        fillColor: Colors.grey[200],
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide.none,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-
-                    // 学年選択欄
-                    const Text(
-                      'がくねん',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        color: Colors.brown,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    ...List.generate(grades.length, (index) {
+                    // 選択肢ボタン
+                    ...List.generate(plans.length, (index) {
                       return GestureDetector(
                         onTap: () {
                           setState(() {
-                            selectedGrade = index;
+                            selectedPlan = index;
                           });
                         },
                         child: Container(
-                          margin: const EdgeInsets.symmetric(vertical: 8),
-                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                          margin: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
+                          padding: EdgeInsets.symmetric(
+                              vertical: screenHeight * 0.02, horizontal: screenWidth * 0.04),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: selectedPlan == index
+                                ? const Color(0xFF1EC9A8).withOpacity(0.2)
+                                : Colors.white,
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(12),
                             boxShadow: [
@@ -145,21 +112,20 @@ class _CStartGradeScreenState extends State<CStartGradeScreen> {
                           child: Row(
                             children: [
                               Icon(
-                                selectedGrade == index
+                                selectedPlan == index
                                     ? Icons.radio_button_checked
                                     : Icons.radio_button_unchecked,
-                                color: selectedGrade == index
+                                color: selectedPlan == index
                                     ? const Color(0xFF1EC9A8)
                                     : Colors.grey,
-                                size: 24,
                               ),
-                              const SizedBox(width: 12),
+                              const SizedBox(width: 10),
                               Text(
-                                grades[index],
+                                plans[index],
                                 style: const TextStyle(
-                                  fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.brown,
+                                  fontSize: 18,
                                 ),
                               ),
                             ],
@@ -173,7 +139,7 @@ class _CStartGradeScreenState extends State<CStartGradeScreen> {
             ),
           ),
 
-          // 固定のボタンと背景コンテナ
+          // 固定の「つぎへ」ボタン
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
@@ -192,16 +158,11 @@ class _CStartGradeScreenState extends State<CStartGradeScreen> {
               child: CustomButton(
                 text: 'つぎへ',
                 onPressed: () {
-                  if (selectedGrade != null) {
+                  if (selectedPlan != null) {
                     // 次の画面へ遷移（必要なら追加）
-                    // 次の画面へ遷移する処理
-                   Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const CStartInterestScreen()),
-                  );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('がくねんを選択してください')),
+                      const SnackBar(content: Text('このあとの予定を選択してください')),
                     );
                   }
                 },

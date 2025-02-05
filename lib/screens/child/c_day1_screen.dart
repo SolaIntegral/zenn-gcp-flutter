@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
+import 'c_report_screen.dart';  // 次の画面へ遷移
 
-class CStartInterestScreen extends StatefulWidget {
-  const CStartInterestScreen({super.key});
+class CDay1Screen extends StatefulWidget {
+  const CDay1Screen({super.key});
 
   @override
-  State<CStartInterestScreen> createState() => _CStartInterestScreenState();
+  State<CDay1Screen> createState() => _CDay1ScreenState();
 }
 
-class _CStartInterestScreenState extends State<CStartInterestScreen> {
-  int? selectedInterest; // 選択された興味を保持する変数
+class _CDay1ScreenState extends State<CDay1Screen> {
+  int? selectedMood; // 選択された気分を保持
 
-  final List<String> interests = [
-    'お絵描きをすること',
-    '運動すること',
-    '勉強すること',
-    'たくさん寝ること',
+  final List<String> moods = [
+    'たのしかった！',
+    'ふつう',
+    'あんまり',
+    'よくなかった',
   ];
 
   @override
@@ -29,44 +30,43 @@ class _CStartInterestScreenState extends State<CStartInterestScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.brown, size: 30),
+          icon: Icon(Icons.arrow_back, color: Colors.brown, size: screenWidth * 0.08),
           onPressed: () => Navigator.pop(context),
         ),
-        toolbarHeight: 50,
       ),
       body: Stack(
         children: [
-          // スクロール可能なコンテンツ
+          // コンテンツ部分
           Padding(
             padding: EdgeInsets.only(bottom: screenHeight * 0.15),
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // 進捗バー
                     LinearProgressIndicator(
-                      value: 0.5, // 50% 完了
+                      value: 0.25,
                       backgroundColor: Colors.grey[300],
                       valueColor: const AlwaysStoppedAnimation(Color(0xFF1EC9A8)),
-                      minHeight: 10,
+                      minHeight: screenHeight * 0.015,
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: screenHeight * 0.03),
 
-                    // 質問テキストとキャラクター
+                    // 質問とキャラクター
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
                           child: Container(
-                            padding: const EdgeInsets.all(16),
+                            padding: EdgeInsets.all(screenWidth * 0.04),
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.grey),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: const Text(
-                              '好きなことを教えてね',
+                              '今日はどんな一日だった？',
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -75,28 +75,29 @@ class _CStartInterestScreenState extends State<CStartInterestScreen> {
                             ),
                           ),
                         ),
-                        const SizedBox(width: 10),
+                        SizedBox(width: screenWidth * 0.03),
                         Image.asset(
                           'lib/assets/chara1.png',
-                          height: 80,
+                          height: screenHeight * 0.1,
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: screenHeight * 0.03),
 
-                    // 興味選択欄
-                    ...List.generate(interests.length, (index) {
+                    // 選択肢ボタン
+                    ...List.generate(moods.length, (index) {
                       return GestureDetector(
                         onTap: () {
                           setState(() {
-                            selectedInterest = index;
+                            selectedMood = index;
                           });
                         },
                         child: Container(
-                          margin: const EdgeInsets.symmetric(vertical: 8),
-                          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                          margin: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
+                          padding: EdgeInsets.symmetric(
+                              vertical: screenHeight * 0.02, horizontal: screenWidth * 0.04),
                           decoration: BoxDecoration(
-                            color: selectedInterest == index
+                            color: selectedMood == index
                                 ? const Color(0xFF1EC9A8).withOpacity(0.2)
                                 : Colors.white,
                             border: Border.all(color: Colors.grey),
@@ -111,11 +112,11 @@ class _CStartInterestScreenState extends State<CStartInterestScreen> {
                           ),
                           child: Center(
                             child: Text(
-                              interests[index],
+                              moods[index],
                               style: const TextStyle(
-                                fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.brown,
+                                fontSize: 18,
                               ),
                             ),
                           ),
@@ -128,7 +129,7 @@ class _CStartInterestScreenState extends State<CStartInterestScreen> {
             ),
           ),
 
-          // 固定のボタンと背景コンテナ
+          // 固定の「つぎへ」ボタン
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
@@ -147,11 +148,15 @@ class _CStartInterestScreenState extends State<CStartInterestScreen> {
               child: CustomButton(
                 text: 'つぎへ',
                 onPressed: () {
-                  if (selectedInterest != null) {
+                  if (selectedMood != null) {
                     // 次の画面へ遷移（必要なら追加）
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const CReportScreen()),
+                  );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('好きなことを選択してください')),
+                      const SnackBar(content: Text('今日の気分を選択してください')),
                     );
                   }
                 },
