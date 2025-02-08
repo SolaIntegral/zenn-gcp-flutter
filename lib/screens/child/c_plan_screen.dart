@@ -29,7 +29,8 @@ class _CPlanScreenState extends State<CPlanScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.brown, size: screenWidth * 0.08),
+          icon: Icon(Icons.arrow_back,
+              color: Colors.brown, size: screenWidth * 0.08),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -48,7 +49,8 @@ class _CPlanScreenState extends State<CPlanScreen> {
                     LinearProgressIndicator(
                       value: 1.0,
                       backgroundColor: Colors.grey[300],
-                      valueColor: const AlwaysStoppedAnimation(Color(0xFF1EC9A8)),
+                      valueColor:
+                          const AlwaysStoppedAnimation(Color(0xFF1EC9A8)),
                       minHeight: screenHeight * 0.015,
                     ),
                     SizedBox(height: screenHeight * 0.03),
@@ -76,7 +78,7 @@ class _CPlanScreenState extends State<CPlanScreen> {
                         ),
                         SizedBox(width: screenWidth * 0.03),
                         Image.asset(
-                          'lib/assets/chara1.png',
+                          'assets/chara1.png',
                           height: screenHeight * 0.1,
                         ),
                       ],
@@ -92,9 +94,11 @@ class _CPlanScreenState extends State<CPlanScreen> {
                           });
                         },
                         child: Container(
-                          margin: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
+                          margin: EdgeInsets.symmetric(
+                              vertical: screenHeight * 0.01),
                           padding: EdgeInsets.symmetric(
-                              vertical: screenHeight * 0.02, horizontal: screenWidth * 0.04),
+                              vertical: screenHeight * 0.02,
+                              horizontal: screenWidth * 0.04),
                           decoration: BoxDecoration(
                             color: selectedPlan == index
                                 ? const Color(0xFF1EC9A8).withOpacity(0.2)
