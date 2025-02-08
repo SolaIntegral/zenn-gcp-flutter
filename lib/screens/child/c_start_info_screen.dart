@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
-import 'c_start_grade_screen.dart';  // 追加
+import 'c_start_grade_screen.dart'; // 追加
 
 class CStartInfoScreen extends StatelessWidget {
   const CStartInfoScreen({super.key});
@@ -45,7 +45,7 @@ class CStartInfoScreen extends StatelessWidget {
             // キャラクター画像
             Flexible(
               child: Image.asset(
-                'lib/assets/chara1.png',
+                'assets/chara1.png',
                 height: screenHeight * 0.35, // 画面高さの35%で表示
                 fit: BoxFit.contain,
               ),
@@ -69,9 +69,10 @@ class CStartInfoScreen extends StatelessWidget {
                 text: 'つぎへ',
                 onPressed: () {
                   // 次の画面へ遷移する処理
-                   Navigator.push(
+                  Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const CStartGradeScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const CStartGradeScreen()),
                   );
                 },
               ),
