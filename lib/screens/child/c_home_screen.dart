@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
-import 'c_day1_screen.dart';  // 遷移先の画面をインポート
+import 'c_day1_screen.dart'; // 遷移先の画面をインポート
 
 class CHomeScreen extends StatelessWidget {
   final String userName;
@@ -23,7 +23,8 @@ class CHomeScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.brown, size: screenWidth * 0.08),
+          icon: Icon(Icons.arrow_back,
+              color: Colors.brown, size: screenWidth * 0.08),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -47,7 +48,7 @@ class CHomeScreen extends StatelessWidget {
                   ),
                   SizedBox(height: screenHeight * 0.02),
                   Image.asset(
-                    'lib/assets/chara1.png',  // 画像の追加
+                    'assets/chara1.png', // 画像の追加
                     height: screenHeight * 0.2, // 画面高さの20%に調整
                     fit: BoxFit.contain,
                   ),

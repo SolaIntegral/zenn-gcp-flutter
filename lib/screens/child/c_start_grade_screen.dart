@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
-import 'c_start_interest_screen.dart';  // 追加
+import 'c_start_interest_screen.dart'; // 追加
 
 class CStartGradeScreen extends StatefulWidget {
   const CStartGradeScreen({super.key});
@@ -52,7 +52,8 @@ class _CStartGradeScreenState extends State<CStartGradeScreen> {
                     LinearProgressIndicator(
                       value: 0.25, // 25% 完了
                       backgroundColor: Colors.grey[300],
-                      valueColor: const AlwaysStoppedAnimation(Color(0xFF1EC9A8)),
+                      valueColor:
+                          const AlwaysStoppedAnimation(Color(0xFF1EC9A8)),
                       minHeight: 10,
                     ),
                     const SizedBox(height: 20),
@@ -80,7 +81,7 @@ class _CStartGradeScreenState extends State<CStartGradeScreen> {
                         ),
                         const SizedBox(width: 10),
                         Image.asset(
-                          'lib/assets/chara1.png',
+                          'assets/chara1.png',
                           height: 80,
                         ),
                       ],
@@ -129,7 +130,8 @@ class _CStartGradeScreenState extends State<CStartGradeScreen> {
                         },
                         child: Container(
                           margin: const EdgeInsets.symmetric(vertical: 8),
-                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 16),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             border: Border.all(color: Colors.grey),
@@ -195,10 +197,11 @@ class _CStartGradeScreenState extends State<CStartGradeScreen> {
                   if (selectedGrade != null) {
                     // 次の画面へ遷移（必要なら追加）
                     // 次の画面へ遷移する処理
-                   Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const CStartInterestScreen()),
-                  );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const CStartInterestScreen()),
+                    );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('がくねんを選択してください')),
