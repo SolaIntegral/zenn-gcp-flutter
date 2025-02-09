@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'screens/child/c_start_intro_screen.dart';
+import 'package:flutter_app1/screens/auth/Child_Parent_select_screen.dart';
+// import 'screens/child/c_start_intro_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.brown,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: const CStartIntroScreen(),
+      home: const CPselectScreen(),
     );
   }
 }
