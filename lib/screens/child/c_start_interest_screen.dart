@@ -103,11 +103,11 @@ class _CStartInterestScreenState extends State<CStartInterestScreen> {
                                 : Colors.white,
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                 color: Colors.black12,
                                 blurRadius: 4,
-                                offset: const Offset(2, 2),
+                                offset: Offset(2, 2),
                               ),
                             ],
                           ),
