@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
 import 'c_report_screen.dart';  // 次の画面へ遷移
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CDay1Screen extends StatefulWidget {
   const CDay1Screen({super.key});
@@ -19,28 +18,6 @@ class _CDay1ScreenState extends State<CDay1Screen> {
     'あんまり',
     'よくなかった',
   ];
-
-   final String userId = "user123"; // TODO: Firebase Authentication から取得する
-
-Future<void> _saveMood() async {
-  if (selectedMood == null) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('今日の気分を選択してください')),
-    );
-    return;
-  }
-
-  await FirebaseFirestore.instance.collection('reports').add({
-    'userId': userId,
-    'date': FieldValue.serverTimestamp(),
-    'mood': moods[selectedMood!],
-  });
-
-  Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(builder: (context) => CReportScreen(selectedMood: moods[selectedMood!])),
-  );
-}
 
   @override
   Widget build(BuildContext context) {
@@ -170,7 +147,19 @@ Future<void> _saveMood() async {
               ),
               child: CustomButton(
                 text: 'つぎへ',
-                onPressed: _saveMood,
+                onPressed: () {
+                  if (selectedMood != null) {
+                    // 次の画面へ遷移（必要なら追加）
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const CReportScreen()),
+                  );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('今日の気分を選択してください')),
+                    );
+                  }
+                },
               ),
             ),
           ),

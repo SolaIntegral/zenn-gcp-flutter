@@ -1,74 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
 import 'chat_screen.dart'; // 次の遷移先
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart'; // 日付計算用
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  String userName = "なまえ";
-  int daysSinceStart = 0;
-  int level = 1;
-  int daysUntilNextLevel = 5;
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchUserData();
-  }
-
-Future<void> _fetchUserData() async {
-  final String userId = FirebaseAuth.instance.currentUser!.uid;
-
-  try {
-    DocumentSnapshot userDoc =
-        await FirebaseFirestore.instance.collection('users').doc(userId).get();
-    DocumentSnapshot charDoc =
-        await FirebaseFirestore.instance.collection('character').doc(userId).get();
-
-    if (userDoc.exists) {
-      Map<String, dynamic> userData = userDoc.data() as Map<String, dynamic>;
-
-      setState(() {
-        userName = userData['name'] ?? "なまえ";
-
-        // Firestore の `registeredAt` から育成日数を計算
-        if (userData.containsKey('registeredAt')) {
-          Timestamp registeredAt = userData['registeredAt'];
-          DateTime registeredDate = registeredAt.toDate();
-          daysSinceStart = DateTime.now().difference(registeredDate).inDays;
-        } else {
-          daysSinceStart = 1; // デフォルト値
-        }
-      });
-    }
-
-    if (charDoc.exists) {
-      Map<String, dynamic> charData = charDoc.data() as Map<String, dynamic>;
-
-      setState(() {
-        // Firestore の `level` を優先
-        level = charData.containsKey('level')
-            ? charData['level']
-            : (daysSinceStart ~/ 5) + 1;
-
-        // 次のレベルアップまでの日数を計算
-        daysUntilNextLevel = 5 - (daysSinceStart % 5);
-      });
-    }
-  } catch (e) {
-    debugPrint("エラー: $e");
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('データ取得に失敗しました。')),
-    );
-  }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -100,9 +35,9 @@ Future<void> _fetchUserData() async {
           ),
 
           // 名前の表示
-          Text(
-            userName,
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.brown),
+          const Text(
+            'なまえ',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.brown),
           ),
 
           SizedBox(height: screenHeight * 0.02),
@@ -117,9 +52,8 @@ Future<void> _fetchUserData() async {
             ),
             child: Column(
               children: [
-                _buildTextRow('育て始めてから', '$daysSinceStart日'),
-                _buildTextRow('現在のレベル', 'Lv.$level'),
-                _buildTextRow('大きくなるまであと', '$daysUntilNextLevel日'),
+                _buildTextRow('育て始めてから', '10日'),
+                _buildTextRow('大きくなるまであと', '4日'),
               ],
             ),
           ),

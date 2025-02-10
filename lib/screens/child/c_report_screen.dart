@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'c_homework_screen.dart';  // 次の画面へ遷移
 
 class CReportScreen extends StatefulWidget {
-  final String selectedMood; // 受け取る気分
-
-  const CReportScreen({super.key, required this.selectedMood});
+  const CReportScreen({super.key});
 
   @override
   State<CReportScreen> createState() => _CReportScreenState();
@@ -14,24 +11,6 @@ class CReportScreen extends StatefulWidget {
 
 class _CReportScreenState extends State<CReportScreen> {
   final TextEditingController _controller = TextEditingController();
-  final String userId = "user123"; // TODO: Firebase Authentication から取得する
-
-
-  // Firestore に日報を保存する関数
-Future<void> _saveReport({required bool isSkipped}) async {
-  await FirebaseFirestore.instance.collection('reports').add({
-    'userId': userId,
-    'date': FieldValue.serverTimestamp(),
-    'mood': widget.selectedMood,
-    'report': isSkipped ? "" : _controller.text,
-  });
-
-  Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(builder: (context) => const CHomeworkScreen()),
-  );
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +98,12 @@ Future<void> _saveReport({required bool isSkipped}) async {
 
                     // スキップボタン
                     GestureDetector(
-                      onTap: () => _saveReport(isSkipped: true),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const CHomeworkScreen()),
+                        );
+                      },
                       child: Container(
                         width: double.infinity,
                         padding: EdgeInsets.symmetric(vertical: screenHeight * 0.02),
@@ -177,7 +161,12 @@ Future<void> _saveReport({required bool isSkipped}) async {
               ),
               child: CustomButton(
                 text: 'つぎへ',
-                onPressed: () => _saveReport(isSkipped: false),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const CHomeworkScreen()),
+                  );
+                },
               ),
             ),
           ),

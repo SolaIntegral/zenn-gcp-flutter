@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
 import 'c_start_interest_screen.dart';  // 追加
-import 'package:cloud_firestore/cloud_firestore.dart'; // Firestore をインポート
+import 'package:shared_preferences/shared_preferences.dart'; // 追加
 
 class CStartGradeScreen extends StatefulWidget {
-  final String userId;
-
-  const CStartGradeScreen({super.key, required this.userId});
+  const CStartGradeScreen({super.key});
 
   @override
   State<CStartGradeScreen> createState() => _CStartGradeScreenState();
@@ -25,16 +23,22 @@ class _CStartGradeScreenState extends State<CStartGradeScreen> {
   ];
     final TextEditingController nameController = TextEditingController(); // 名前入力用
 
-  Future<void> _saveGrade(String selectedGrade) async {
-  await FirebaseFirestore.instance.collection('users').doc(userId).update({
-    'grade': selectedGrade,
-  });
+  Future<void> _saveInfo() async {
+    if (selectedGrade != null && nameController.text.isNotEmpty) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('userName', nameController.text); // 名前を保存
+      await prefs.setString('userGrade', grades[selectedGrade!]); // 学年を保存
 
-  Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(builder: (context) => const CStartInterestScreen()),
-  );
-}
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const CStartInterestScreen()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('名前と学年を入力してください')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +117,6 @@ class _CStartGradeScreenState extends State<CStartGradeScreen> {
                     ),
                     const SizedBox(height: 8),
                     TextField(
-                      controller: nameController, // コントローラーを適用
                       decoration: InputDecoration(
                         hintText: '名前を入力してください',
                         filled: true,
