@@ -1,9 +1,49 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
 import 'home_screen.dart'; // 次の遷移先
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class CToHomeScreen extends StatelessWidget {
+class CToHomeScreen extends StatefulWidget {
   const CToHomeScreen({super.key});
+
+  @override
+  State<CToHomeScreen> createState() => _CToHomeScreenState();
+}
+
+
+class _CToHomeScreenState extends State<CToHomeScreen> {
+  String characterName = "キャラ名";
+  int daysSinceStart = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchCharacterData();
+  }
+
+Future<void> _fetchCharacterData() async {
+  try {
+    DocumentSnapshot charDoc =
+        await FirebaseFirestore.instance.collection('character').doc(userId).get();
+    DocumentSnapshot userDoc =
+        await FirebaseFirestore.instance.collection('users').doc(userId).get();
+
+    if (charDoc.exists && userDoc.exists) {
+      Map<String, dynamic> charData = charDoc.data() as Map<String, dynamic>;
+      Map<String, dynamic> userData = userDoc.data() as Map<String, dynamic>;
+
+      setState(() {
+        characterName = charData['name'] ?? "キャラ名";
+        Timestamp registeredAt = userData['registeredAt'];
+        DateTime registeredDate = registeredAt.toDate();
+        daysSinceStart = DateTime.now().difference(registeredDate).inDays + 1;
+      });
+    }
+  } catch (e) {
+    debugPrint("エラー: $e");
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +79,8 @@ class CToHomeScreen extends StatelessWidget {
                     SizedBox(height: screenHeight * 0.02),
 
                     // 「おかえり！」テキスト
-                    const Text(
-                      'おかえり！',
+                     Text(
+                      '$characterName に会えたね！',
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
@@ -57,8 +97,8 @@ class CToHomeScreen extends StatelessWidget {
                         color: const Color(0xFF1EC9A8),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: const Text(
-                        '10 日目',
+                      child: Text(
+                        '$daysSinceStart 日目',
                         style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,

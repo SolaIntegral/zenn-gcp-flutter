@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
-import 'package:shared_preferences/shared_preferences.dart'; // 追加
-
+import 'package:cloud_firestore/cloud_firestore.dart'; // Firestore を追加
+import '../home/c_home_screen.dart'; // 次の画面
 
 class CStartInterestScreen extends StatefulWidget {
   const CStartInterestScreen({super.key});
@@ -20,20 +20,17 @@ class _CStartInterestScreenState extends State<CStartInterestScreen> {
     'たくさん寝ること',
   ];
 
-  Future<void> _saveInterest() async {
-  if (selectedInterest != null) {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('userInterest', interests[selectedInterest!]); // 興味を保存
+Future<void> _saveInterest(String selectedInterest) async {
+  await FirebaseFirestore.instance.collection('users').doc(userId).update({
+    'interest': selectedInterest,
+    'isRegistered': 'c_registered', // 初回登録済みフラグ
+  });
 
-    // 設定完了後、isRegisteredを設定して初回ログイン完了
-    await prefs.setString('isRegistered', 'c_registered');
-
-    Navigator.pushReplacementNamed(context, '/c_home_screen'); // 子供用画面へ
-  } else {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('好きなことを選択してください')),
-    );
-  }
+      // ホーム画面へ遷移
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const CHomeScreen()),
+      );
 }
 
   @override

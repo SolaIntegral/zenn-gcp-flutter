@@ -1,7 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../widgets/custom_button.dart';
+import '../child/c_start_intro_screen.dart'; // 初回登録時の画面
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
+
+  @override
+  State<SignupScreen> createState() => _SignupScreenState();
+}
+
+
+class _SignupScreenState extends State<SignupScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> _signup() async {
+    try {
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+
+      String userId = userCredential.user!.uid;
+
+      // Firestore にユーザー情報を保存
+      await FirebaseFirestore.instance.collection('users').doc(userId).set({
+        'name': _nameController.text.trim(),
+        'email': _emailController.text.trim(),
+        'registeredAt': FieldValue.serverTimestamp(),
+        'isRegistered': false, // 初回登録フラグ
+      });
+
+      // 初回登録画面へ遷移
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const CStartIntroScreen()),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('エラー: ${e.toString()}')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,46 +58,12 @@ class SignUpScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'ユーザー登録',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.brown),
-            ),
+            TextField(controller: _nameController, decoration: const InputDecoration(labelText: '名前')),
+            TextField(controller: _emailController, decoration: const InputDecoration(labelText: 'メールアドレス')),
+            TextField(controller: _passwordController, decoration: const InputDecoration(labelText: 'パスワード'), obscureText: true),
             const SizedBox(height: 20),
-
-            // 入力フォーム
-            _buildTextField('メールアドレスを入力'),
-            _buildTextField('パスワードを入力', isPassword: true),
-            _buildTextField('確認のため再度ご入力ください', isPassword: true),
-
-            const SizedBox(height: 30),
-
-            // 登録ボタン
-            Align(
-              alignment: Alignment.centerRight,
-              child: FloatingActionButton(
-                backgroundColor: const Color(0xFF1EC9A8),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/login');
-                },
-                child: const Icon(Icons.arrow_forward),
-              ),
-            ),
+            CustomButton(text: '登録', onPressed: _signup),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTextField(String hintText, {bool isPassword = false}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: TextField(
-        obscureText: isPassword,
-        decoration: InputDecoration(
-          hintText: hintText,
-          filled: true,
-          fillColor: Colors.white,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
         ),
       ),
     );

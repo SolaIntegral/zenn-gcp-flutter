@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
 import 'c_start_grade_screen.dart';  // 追加
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CStartInfoScreen extends StatelessWidget {
   const CStartInfoScreen({super.key});
+
 
   @override
   Widget build(BuildContext context) {
     // 画面サイズを取得
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+  final String userId = FirebaseAuth.instance.currentUser!.uid;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -68,11 +71,13 @@ class CStartInfoScreen extends StatelessWidget {
               child: CustomButton(
                 text: 'つぎへ',
                 onPressed: () {
-                  // 次の画面へ遷移する処理
-                   Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const CStartGradeScreen()),
-                  );
+                  // 次の画面へ `userId` を渡して遷移
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CStartGradeScreen(userId: userId),
+              ),
+            );
                 },
               ),
             ),

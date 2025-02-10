@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../widgets/custom_button.dart';
 import 'c_plan_screen.dart';  // 次の画面へ遷移
 
@@ -14,6 +15,25 @@ class _CHomeworkScreenState extends State<CHomeworkScreen> {
   bool? hasPrint;
   final TextEditingController homeworkController = TextEditingController();
   final TextEditingController printController = TextEditingController();
+  final String userId = "user123"; // TODO: Firebase Authentication から取得する
+
+    // Firestore に宿題データを保存
+Future<void> _saveHomework() async {
+  await FirebaseFirestore.instance.collection('homework_reports').add({
+    'userId': userId,
+    'date': FieldValue.serverTimestamp(),
+    'hasHomework': hasHomework ?? false,
+    'homeworkDetails': hasHomework == true ? homeworkController.text : "",
+    'hasPrint': hasPrint ?? false,
+    'printDetails': hasPrint == true ? printController.text : "",
+  });
+
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => const CPlanScreen()),
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -123,12 +143,7 @@ class _CHomeworkScreenState extends State<CHomeworkScreen> {
               ),
               child: CustomButton(
                 text: 'つぎへ',
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const CPlanScreen()),
-                  );
-                },
+                onPressed: _saveHomeworkAndProceed,
               ),
             ),
           ),
