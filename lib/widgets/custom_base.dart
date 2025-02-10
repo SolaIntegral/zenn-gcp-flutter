@@ -45,7 +45,8 @@ class CustomBase extends StatelessWidget {
         // 渡されたタイトルテキストを表示
         title: Text(
           title,
-          style: const TextStyle(color: Colors.black),
+          style: const TextStyle(
+              color: Color(0xFF684B09), fontWeight: FontWeight.w800),
         ),
         backgroundColor: Colors.white, // AppBar の背景色を白に設定
         elevation: 0, // 影を無くす
