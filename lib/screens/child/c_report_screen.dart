@@ -18,20 +18,20 @@ class _CReportScreenState extends State<CReportScreen> {
 
 
   // Firestore に日報を保存する関数
-  Future<void> _saveReport({required bool isSkipped}) async {
-    await FirebaseFirestore.instance.collection('reports').add({
-      'userId': userId,
-      'date': FieldValue.serverTimestamp(),
-      'mood': widget.selectedMood, // 前の画面で選択された気分
-      'report': isSkipped ? '' : _controller.text, // スキップ時は空のまま保存
-    });
+Future<void> _saveReport({required bool isSkipped}) async {
+  await FirebaseFirestore.instance.collection('reports').add({
+    'userId': userId,
+    'date': FieldValue.serverTimestamp(),
+    'mood': widget.selectedMood,
+    'report': isSkipped ? "" : _controller.text,
+  });
 
-    // 次の画面へ遷移
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const CHomeworkScreen()),
-    );
-  }
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => const CHomeworkScreen()),
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {

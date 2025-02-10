@@ -21,9 +21,8 @@ class _CToHomeScreenState extends State<CToHomeScreen> {
     _fetchCharacterData();
   }
 
-  Future<void> _fetchCharacterData() async {
-    String userId = "user123"; // TODO: Firebase Authentication で取得する
-
+Future<void> _fetchCharacterData() async {
+  try {
     DocumentSnapshot charDoc =
         await FirebaseFirestore.instance.collection('character').doc(userId).get();
     DocumentSnapshot userDoc =
@@ -35,14 +34,16 @@ class _CToHomeScreenState extends State<CToHomeScreen> {
 
       setState(() {
         characterName = charData['name'] ?? "キャラ名";
-
-        // Firestore の `registeredAt` から育成日数を計算
         Timestamp registeredAt = userData['registeredAt'];
         DateTime registeredDate = registeredAt.toDate();
         daysSinceStart = DateTime.now().difference(registeredDate).inDays + 1;
       });
     }
+  } catch (e) {
+    debugPrint("エラー: $e");
   }
+}
+
 
   @override
   Widget build(BuildContext context) {

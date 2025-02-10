@@ -22,30 +22,25 @@ class _CDay1ScreenState extends State<CDay1Screen> {
 
    final String userId = "user123"; // TODO: Firebase Authentication から取得する
 
-    // Firestore に気分データを保存する関数
-  Future<void> _saveMoodAndProceed() async {
-    if (selectedMood == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('今日の気分を選択してください')),
-      );
-      return;
-    }
-
-    // Firestore に気分を保存
-    await FirebaseFirestore.instance.collection('reports').add({
-      'userId': userId,
-      'date': FieldValue.serverTimestamp(),
-      'mood': moods[selectedMood!], // 選択した気分を保存
-    });
-
-    // 次の画面へ遷移（気分データを渡す）
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => CReportScreen(selectedMood: moods[selectedMood!]),
-      ),
+Future<void> _saveMood() async {
+  if (selectedMood == null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('今日の気分を選択してください')),
     );
+    return;
   }
+
+  await FirebaseFirestore.instance.collection('reports').add({
+    'userId': userId,
+    'date': FieldValue.serverTimestamp(),
+    'mood': moods[selectedMood!],
+  });
+
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => CReportScreen(selectedMood: moods[selectedMood!])),
+  );
+}
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +170,7 @@ class _CDay1ScreenState extends State<CDay1Screen> {
               ),
               child: CustomButton(
                 text: 'つぎへ',
-                onPressed: _saveMoodAndProceed,
+                onPressed: _saveMood,
               ),
             ),
           ),

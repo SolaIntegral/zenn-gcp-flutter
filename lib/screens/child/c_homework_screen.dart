@@ -18,22 +18,22 @@ class _CHomeworkScreenState extends State<CHomeworkScreen> {
   final String userId = "user123"; // TODO: Firebase Authentication から取得する
 
     // Firestore に宿題データを保存
-  Future<void> _saveHomeworkAndProceed() async {
-    await FirebaseFirestore.instance.collection('homework_reports').add({
-      'userId': userId,
-      'date': FieldValue.serverTimestamp(),
-      'hasHomework': hasHomework ?? false,
-      'homeworkDetails': hasHomework == true ? homeworkController.text : '',
-      'hasPrint': hasPrint ?? false,
-      'printDetails': hasPrint == true ? printController.text : '',
-    });
+Future<void> _saveHomework() async {
+  await FirebaseFirestore.instance.collection('homework_reports').add({
+    'userId': userId,
+    'date': FieldValue.serverTimestamp(),
+    'hasHomework': hasHomework ?? false,
+    'homeworkDetails': hasHomework == true ? homeworkController.text : "",
+    'hasPrint': hasPrint ?? false,
+    'printDetails': hasPrint == true ? printController.text : "",
+  });
 
-    // 次の画面へ遷移
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const CPlanScreen()),
-    );
-  }
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => const CPlanScreen()),
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {

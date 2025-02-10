@@ -13,6 +13,7 @@ class CHomeScreen extends StatefulWidget {
 class _CHomeScreenState extends State<CHomeScreen> {
   String userName = "なまえ";
   int loginDays = 1;
+  final String userId = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   void initState() {
@@ -21,22 +22,24 @@ class _CHomeScreenState extends State<CHomeScreen> {
   }
 
   Future<void> _fetchUserData() async {
-    String userId = "user123"; // TODO: Firebase Authentication で取得
+    try {
+      DocumentSnapshot userDoc =
+          await FirebaseFirestore.instance.collection('users').doc(userId).get();
 
-    DocumentSnapshot userDoc =
-        await FirebaseFirestore.instance.collection('users').doc(userId).get();
+      if (userDoc.exists) {
+        Map<String, dynamic> userData = userDoc.data() as Map<String, dynamic>;
 
-    if (userDoc.exists) {
-      Map<String, dynamic> userData = userDoc.data() as Map<String, dynamic>;
+        setState(() {
+          userName = userData['name'] ?? "なまえ";
 
-      setState(() {
-        userName = userData['name'] ?? "なまえ";
-
-        // Firestore の `registeredAt` からログイン日数を計算
-        Timestamp registeredAt = userData['registeredAt'];
-        DateTime registeredDate = registeredAt.toDate();
-        loginDays = DateTime.now().difference(registeredDate).inDays + 1;
-      });
+          // Firestore の `registeredAt` から育成日数を計算
+          Timestamp registeredAt = userData['registeredAt'];
+          DateTime registeredDate = registeredAt.toDate();
+          loginDays = DateTime.now().difference(registeredDate).inDays + 1;
+        });
+      }
+    } catch (e) {
+      debugPrint("エラー: $e");
     }
   }
 

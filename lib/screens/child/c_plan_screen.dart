@@ -22,19 +22,19 @@ class _CPlanScreenState extends State<CPlanScreen> {
   ];
 
   // Firestore に予定データを保存
-  Future<void> _savePlanAndProceed() async {
-    await FirebaseFirestore.instance.collection('plans').add({
-      'userId': userId,
-      'date': FieldValue.serverTimestamp(),
-      'selectedPlan': selectedPlan != null ? plans[selectedPlan!] : 'なし',
-    });
+Future<void> _savePlan() async {
+  await FirebaseFirestore.instance.collection('plans').add({
+    'userId': userId,
+    'date': FieldValue.serverTimestamp(),
+    'selectedPlan': selectedPlan != null ? plans[selectedPlan!] : "なし",
+  });
 
-    // 次の画面へ遷移
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const CToHomeScreen()),
-    );
-  }
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => const CToHomeScreen()),
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +175,7 @@ class _CPlanScreenState extends State<CPlanScreen> {
               ),
               child: CustomButton(
                 text: 'つぎへ',
-                onPressed: _savePlanAndProceed,
+                onPressed: _savePlan,
               ),
             ),
           ),
