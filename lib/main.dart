@@ -19,8 +19,8 @@ void main() async {
     homeWidget = const CHomeScreen(
       //子供のおかえり画面
       // 登録済みのユーザー情報を取得
-    final userName = prefs.getString('userName') ?? 'ゲスト';
-    final loginDays = prefs.getInt('loginDays') ?? 1;
+     userName : 'ゲスト';
+     loginDays : 1;
     );
   } else if (isRegistered == 'p_registered') {
     //親のおかえり画面
