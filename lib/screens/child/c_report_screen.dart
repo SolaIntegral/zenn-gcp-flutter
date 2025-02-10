@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
-import 'c_homework_screen.dart'; // 次の画面へ遷移
+import 'c_homework_screen.dart';  // 次の画面へ遷移
 
 class CReportScreen extends StatefulWidget {
   const CReportScreen({super.key});
@@ -23,8 +23,7 @@ class _CReportScreenState extends State<CReportScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back,
-              color: Colors.brown, size: screenWidth * 0.08),
+          icon: Icon(Icons.arrow_back, color: Colors.brown, size: screenWidth * 0.08),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -43,8 +42,7 @@ class _CReportScreenState extends State<CReportScreen> {
                     LinearProgressIndicator(
                       value: 0.5,
                       backgroundColor: Colors.grey[300],
-                      valueColor:
-                          const AlwaysStoppedAnimation(Color(0xFF1EC9A8)),
+                      valueColor: const AlwaysStoppedAnimation(Color(0xFF1EC9A8)),
                       minHeight: screenHeight * 0.015,
                     ),
                     SizedBox(height: screenHeight * 0.03),
@@ -72,7 +70,7 @@ class _CReportScreenState extends State<CReportScreen> {
                         ),
                         SizedBox(width: screenWidth * 0.03),
                         Image.asset(
-                          'assets/chara1.png',
+                          'lib/assets/chara1.png',
                           height: screenHeight * 0.1,
                         ),
                       ],
@@ -103,14 +101,12 @@ class _CReportScreenState extends State<CReportScreen> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => const CHomeworkScreen()),
+                          MaterialPageRoute(builder: (context) => const CHomeworkScreen()),
                         );
                       },
                       child: Container(
                         width: double.infinity,
-                        padding:
-                            EdgeInsets.symmetric(vertical: screenHeight * 0.02),
+                        padding: EdgeInsets.symmetric(vertical: screenHeight * 0.02),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           border: Border.all(color: Colors.grey),
@@ -168,8 +164,7 @@ class _CReportScreenState extends State<CReportScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => const CHomeworkScreen()),
+                    MaterialPageRoute(builder: (context) => const CHomeworkScreen()),
                   );
                 },
               ),
