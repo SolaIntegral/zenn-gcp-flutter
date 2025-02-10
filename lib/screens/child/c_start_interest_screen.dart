@@ -49,8 +49,7 @@ class _CStartInterestScreenState extends State<CStartInterestScreen> {
                     LinearProgressIndicator(
                       value: 0.5, // 50% 完了
                       backgroundColor: Colors.grey[300],
-                      valueColor:
-                          const AlwaysStoppedAnimation(Color(0xFF1EC9A8)),
+                      valueColor: const AlwaysStoppedAnimation(Color(0xFF1EC9A8)),
                       minHeight: 10,
                     ),
                     const SizedBox(height: 20),
@@ -78,7 +77,7 @@ class _CStartInterestScreenState extends State<CStartInterestScreen> {
                         ),
                         const SizedBox(width: 10),
                         Image.asset(
-                          'assets/chara1.png',
+                          'lib/assets/chara1.png',
                           height: 80,
                         ),
                       ],
@@ -95,8 +94,7 @@ class _CStartInterestScreenState extends State<CStartInterestScreen> {
                         },
                         child: Container(
                           margin: const EdgeInsets.symmetric(vertical: 8),
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 16, horizontal: 20),
+                          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
                           decoration: BoxDecoration(
                             color: selectedInterest == index
                                 ? const Color(0xFF1EC9A8).withOpacity(0.2)

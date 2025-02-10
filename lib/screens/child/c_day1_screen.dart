@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
-import 'c_report_screen.dart'; // 次の画面へ遷移
+import 'c_report_screen.dart';  // 次の画面へ遷移
 
 class CDay1Screen extends StatefulWidget {
   const CDay1Screen({super.key});
@@ -30,8 +30,7 @@ class _CDay1ScreenState extends State<CDay1Screen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back,
-              color: Colors.brown, size: screenWidth * 0.08),
+          icon: Icon(Icons.arrow_back, color: Colors.brown, size: screenWidth * 0.08),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -50,8 +49,7 @@ class _CDay1ScreenState extends State<CDay1Screen> {
                     LinearProgressIndicator(
                       value: 0.25,
                       backgroundColor: Colors.grey[300],
-                      valueColor:
-                          const AlwaysStoppedAnimation(Color(0xFF1EC9A8)),
+                      valueColor: const AlwaysStoppedAnimation(Color(0xFF1EC9A8)),
                       minHeight: screenHeight * 0.015,
                     ),
                     SizedBox(height: screenHeight * 0.03),
@@ -79,7 +77,7 @@ class _CDay1ScreenState extends State<CDay1Screen> {
                         ),
                         SizedBox(width: screenWidth * 0.03),
                         Image.asset(
-                          'assets/chara1.png',
+                          'lib/assets/chara1.png',
                           height: screenHeight * 0.1,
                         ),
                       ],
@@ -95,11 +93,9 @@ class _CDay1ScreenState extends State<CDay1Screen> {
                           });
                         },
                         child: Container(
-                          margin: EdgeInsets.symmetric(
-                              vertical: screenHeight * 0.01),
+                          margin: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
                           padding: EdgeInsets.symmetric(
-                              vertical: screenHeight * 0.02,
-                              horizontal: screenWidth * 0.04),
+                              vertical: screenHeight * 0.02, horizontal: screenWidth * 0.04),
                           decoration: BoxDecoration(
                             color: selectedMood == index
                                 ? const Color(0xFF1EC9A8).withOpacity(0.2)
@@ -155,10 +151,9 @@ class _CDay1ScreenState extends State<CDay1Screen> {
                   if (selectedMood != null) {
                     // 次の画面へ遷移（必要なら追加）
                     Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const CReportScreen()),
-                    );
+                    context,
+                    MaterialPageRoute(builder: (context) => const CReportScreen()),
+                  );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('今日の気分を選択してください')),

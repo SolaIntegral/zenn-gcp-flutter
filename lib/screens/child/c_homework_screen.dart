@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
-import 'c_plan_screen.dart'; // 次の画面へ遷移
+import 'c_plan_screen.dart';  // 次の画面へ遷移
 
 class CHomeworkScreen extends StatefulWidget {
   const CHomeworkScreen({super.key});
@@ -26,8 +26,7 @@ class _CHomeworkScreenState extends State<CHomeworkScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back,
-              color: Colors.brown, size: screenWidth * 0.08),
+          icon: Icon(Icons.arrow_back, color: Colors.brown, size: screenWidth * 0.08),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -46,8 +45,7 @@ class _CHomeworkScreenState extends State<CHomeworkScreen> {
                     LinearProgressIndicator(
                       value: 0.75,
                       backgroundColor: Colors.grey[300],
-                      valueColor:
-                          const AlwaysStoppedAnimation(Color(0xFF1EC9A8)),
+                      valueColor: const AlwaysStoppedAnimation(Color(0xFF1EC9A8)),
                       minHeight: screenHeight * 0.015,
                     ),
                     SizedBox(height: screenHeight * 0.03),
@@ -75,7 +73,7 @@ class _CHomeworkScreenState extends State<CHomeworkScreen> {
                         ),
                         SizedBox(width: screenWidth * 0.03),
                         Image.asset(
-                          'assets/chara1.png',
+                          'lib/assets/chara1.png',
                           height: screenHeight * 0.1,
                         ),
                       ],
@@ -128,8 +126,7 @@ class _CHomeworkScreenState extends State<CHomeworkScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => const CPlanScreen()),
+                    MaterialPageRoute(builder: (context) => const CPlanScreen()),
                   );
                 },
               ),
@@ -181,28 +178,22 @@ class _CHomeworkScreenState extends State<CHomeworkScreen> {
     );
   }
 
-  Widget _buildRadioOption(String label, bool optionValue, bool? selectedValue,
-      Function(bool?) onChanged) {
+  Widget _buildRadioOption(
+      String label, bool optionValue, bool? selectedValue, Function(bool?) onChanged) {
     return GestureDetector(
       onTap: () => onChanged(optionValue),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: BoxDecoration(
-          color: selectedValue == optionValue
-              ? const Color(0xFF1EC9A8).withOpacity(0.2)
-              : Colors.white,
+          color: selectedValue == optionValue ? const Color(0xFF1EC9A8).withOpacity(0.2) : Colors.white,
           border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
           children: [
             Icon(
-              selectedValue == optionValue
-                  ? Icons.radio_button_checked
-                  : Icons.radio_button_unchecked,
-              color: selectedValue == optionValue
-                  ? const Color(0xFF1EC9A8)
-                  : Colors.grey,
+              selectedValue == optionValue ? Icons.radio_button_checked : Icons.radio_button_unchecked,
+              color: selectedValue == optionValue ? const Color(0xFF1EC9A8) : Colors.grey,
             ),
             const SizedBox(width: 8),
             Text(
