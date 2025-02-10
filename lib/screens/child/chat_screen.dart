@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class ChatScreen extends StatelessWidget {
+class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
 
   @override
@@ -9,48 +10,20 @@ class ChatScreen extends StatelessWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final TextEditingController _messageController = TextEditingController();
-  final String userId = "user123"; // TODO: Firebase Authentication から取得する
-  final String aiId = "ai_bot"; // AI の ID（Firestore 内で区別）
+  final TextEditingController _controller = TextEditingController();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final String userId = FirebaseAuth.instance.currentUser?.uid ?? "user";
+  final String aiId = "ai_bot"; // AIメッセージ用の固定ID
 
-  // Firestore にメッセージを保存
-  Future<void> _sendMessage(String message) async {
-    if (message.trim().isEmpty) return;
-
-    await FirebaseFirestore.instance.collection('chat').add({
-      'senderId': userId,
-      'timestamp': FieldValue.serverTimestamp(),
-      'message': message,
-    });
-
-    _messageController.clear();
-
-    // 簡単な AI の自動返信を作成（後で AI に置き換える）
-    await Future.delayed(const Duration(seconds: 1)); // 1秒遅延
-    await _sendAiResponse(message);
-  }
-
-
-  // 簡易 AI レスポンス（後で ChatGPT などに置き換える）
-  Future<void> _sendAiResponse(String userMessage) async {
-    String aiResponse;
-
-    if (userMessage.contains("がんばった")) {
-      aiResponse = "すごいね！どんなことをがんばったの？";
-    } else if (userMessage.contains("たいへん")) {
-      aiResponse = "たいへんだったね…なにがあったの？";
-    } else if (userMessage.contains("ほめて")) {
-      aiResponse = "えらいね！よくがんばったね！";
-    } else {
-      aiResponse = "そうなんだ！もっとおしえて！";
+  void _sendMessage() {
+    if (_controller.text.isNotEmpty) {
+      _firestore.collection('chat').add({
+        'senderId': userId,
+        'message': _controller.text,
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+      _controller.clear();
     }
-
-    // AI のメッセージを Firestore に保存
-    await FirebaseFirestore.instance.collection('chat').add({
-      'senderId': aiId,
-      'timestamp': FieldValue.serverTimestamp(),
-      'message': aiResponse,
-    });
   }
 
   @override
@@ -69,10 +42,10 @@ class _ChatScreenState extends State<ChatScreen> {
             color: const Color(0xFF1EC9A8),
           ),
 
-                    // チャット履歴表示
+          // チャット履歴表示
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance
+              stream: _firestore
                   .collection('chat')
                   .orderBy('timestamp', descending: true)
                   .snapshots(),
@@ -86,7 +59,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   reverse: true,
                   itemCount: messages.length,
                   itemBuilder: (context, index) {
-                    var chatData = messages[index].data() as Map<String, dynamic>;
+                    var chatData = messages[index].data() as Map<String, dynamic>? ?? {};
                     bool isUserMessage = chatData['senderId'] == userId;
                     bool isAiMessage = chatData['senderId'] == aiId;
 
@@ -151,20 +124,20 @@ class _ChatScreenState extends State<ChatScreen> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: TextField(
-                    controller: _messageController,
+                    controller: _controller,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'なまえに何か話しかけてみよう',
                       hintStyle: TextStyle(color: Colors.grey),
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.arrow_forward, color: Colors.teal),
-                        onPressed: () => _sendMessage(_messageController.text),
+                        onPressed: _sendMessage,
                       ),
                     ),
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.02),
-                
+
                 // 選択ボタン
                 Wrap(
                   spacing: screenWidth * 0.05,
@@ -186,7 +159,12 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Widget _buildChatButton(String text) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+        setState(() {
+          _controller.text = text;
+        });
+        _sendMessage();
+      },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.amber,
         foregroundColor: Colors.brown,
