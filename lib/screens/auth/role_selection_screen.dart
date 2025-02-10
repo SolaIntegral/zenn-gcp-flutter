@@ -1,7 +1,7 @@
 // RoleSelectionScreen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_app1/screens/child/c_start_intro_screen.dart';
-import 'package:flutter_app1/screens/parent/p_registration_screen.dart';
+import 'package:flutter_app1/screens/parent/p_registration_screen1.dart';
 
 class RoleSelectionScreen extends StatelessWidget {
   const RoleSelectionScreen({Key? key}) : super(key: key);
@@ -35,7 +35,7 @@ class RoleSelectionScreen extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const PRegisterScreen(),
+                    builder: (context) => const PRegisterScreen1(),
                   ),
                 );
               },
