@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app1/screens/auth/role_selection_screen.dart';
 import 'package:flutter_app1/screens/child/c_home_screen.dart';
-import 'package:flutter_app1/screens/parent/p_home_screen.dart';
+import 'package:flutter_app1/screens/parent/p_welcomeback_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -24,7 +24,7 @@ void main() async {
     );
   } else if (isRegistered == 'p_registered') {
     //親のおかえり画面
-    homeWidget = const PHomeScreen();
+    homeWidget = const PWelcomebackScreen();
   } else {
     // 万が一（不正な値が入っていた場合）はロール選択画面を表示
     homeWidget = const RoleSelectionScreen();
