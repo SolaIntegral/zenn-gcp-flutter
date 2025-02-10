@@ -4,7 +4,7 @@ import 'package:flutter_app1/screens/auth/role_selection_screen.dart';
 import 'package:flutter_app1/screens/child/c_home_screen.dart';
 import 'package:flutter_app1/screens/parent/p_welcomeback_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+//a
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
