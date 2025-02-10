@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
 import 'c_start_interest_screen.dart';  // 追加
-import 'package:shared_preferences/shared_preferences.dart'; // 追加
+import 'package:cloud_firestore/cloud_firestore.dart'; // Firestore をインポート
 
 class CStartGradeScreen extends StatefulWidget {
   const CStartGradeScreen({super.key});
@@ -25,9 +25,12 @@ class _CStartGradeScreenState extends State<CStartGradeScreen> {
 
   Future<void> _saveInfo() async {
     if (selectedGrade != null && nameController.text.isNotEmpty) {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('userName', nameController.text); // 名前を保存
-      await prefs.setString('userGrade', grades[selectedGrade!]); // 学年を保存
+      String userId = "user123"; // TODO: 実際は Firebase Authentication から取得
+
+      await FirebaseFirestore.instance.collection('users').doc(userId).set({
+        'name': nameController.text, // ユーザー名
+        'grade': grades[selectedGrade!], // 学年
+      }, SetOptions(merge: true)); // 既存データを上書きしないよう merge を使用
 
       Navigator.push(
         context,
@@ -117,6 +120,7 @@ class _CStartGradeScreenState extends State<CStartGradeScreen> {
                     ),
                     const SizedBox(height: 8),
                     TextField(
+                      controller: nameController, // コントローラーを適用
                       decoration: InputDecoration(
                         hintText: '名前を入力してください',
                         filled: true,
