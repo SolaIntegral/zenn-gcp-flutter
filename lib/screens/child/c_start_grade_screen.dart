@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
 import 'c_start_interest_screen.dart';  // 追加
+import 'package:shared_preferences/shared_preferences.dart'; // 追加
 
 class CStartGradeScreen extends StatefulWidget {
   const CStartGradeScreen({super.key});
@@ -20,6 +21,24 @@ class _CStartGradeScreenState extends State<CStartGradeScreen> {
     '小学5年生',
     '小学6年生',
   ];
+    final TextEditingController nameController = TextEditingController(); // 名前入力用
+
+  Future<void> _saveInfo() async {
+    if (selectedGrade != null && nameController.text.isNotEmpty) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('userName', nameController.text); // 名前を保存
+      await prefs.setString('userGrade', grades[selectedGrade!]); // 学年を保存
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const CStartInterestScreen()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('名前と学年を入力してください')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -191,20 +210,7 @@ class _CStartGradeScreenState extends State<CStartGradeScreen> {
               ),
               child: CustomButton(
                 text: 'つぎへ',
-                onPressed: () {
-                  if (selectedGrade != null) {
-                    // 次の画面へ遷移（必要なら追加）
-                    // 次の画面へ遷移する処理
-                   Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const CStartInterestScreen()),
-                  );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('がくねんを選択してください')),
-                    );
-                  }
-                },
+                onPressed: _saveInfo,
               ),
             ),
           ),
