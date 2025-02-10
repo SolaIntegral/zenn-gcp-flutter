@@ -4,7 +4,10 @@ import 'package:flutter_app1/screens/auth/role_selection_screen.dart';
 import 'package:flutter_app1/screens/child/c_home_screen.dart';
 import 'package:flutter_app1/screens/parent/p_welcomeback_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-//a
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
@@ -19,8 +22,9 @@ void main() async {
     homeWidget = const CHomeScreen(
       //子供のおかえり画面
       // 登録済みのユーザー情報を取得
-    final userName = prefs.getString('userName') ?? 'ゲスト';
-    final loginDays = prefs.getInt('loginDays') ?? 1;
+     userName : 'ゲスト';
+     loginDays : 1;
+
     );
   } else if (isRegistered == 'p_registered') {
     //親のおかえり画面
