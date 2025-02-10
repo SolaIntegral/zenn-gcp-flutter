@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'c_homework_screen.dart';  // 次の画面へ遷移
 
 class CReportScreen extends StatefulWidget {
-  const CReportScreen({super.key});
+  final String selectedMood; // 受け取る気分
+
+  const CReportScreen({super.key, required this.selectedMood});
 
   @override
   State<CReportScreen> createState() => _CReportScreenState();
@@ -11,6 +14,24 @@ class CReportScreen extends StatefulWidget {
 
 class _CReportScreenState extends State<CReportScreen> {
   final TextEditingController _controller = TextEditingController();
+  final String userId = "user123"; // TODO: Firebase Authentication から取得する
+
+
+  // Firestore に日報を保存する関数
+  Future<void> _saveReport({required bool isSkipped}) async {
+    await FirebaseFirestore.instance.collection('reports').add({
+      'userId': userId,
+      'date': FieldValue.serverTimestamp(),
+      'mood': widget.selectedMood, // 前の画面で選択された気分
+      'report': isSkipped ? '' : _controller.text, // スキップ時は空のまま保存
+    });
+
+    // 次の画面へ遷移
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const CHomeworkScreen()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,12 +119,7 @@ class _CReportScreenState extends State<CReportScreen> {
 
                     // スキップボタン
                     GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const CHomeworkScreen()),
-                        );
-                      },
+                      onTap: () => _saveReport(isSkipped: true),
                       child: Container(
                         width: double.infinity,
                         padding: EdgeInsets.symmetric(vertical: screenHeight * 0.02),
@@ -161,12 +177,7 @@ class _CReportScreenState extends State<CReportScreen> {
               ),
               child: CustomButton(
                 text: 'つぎへ',
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const CHomeworkScreen()),
-                  );
-                },
+                onPressed: () => _saveReport(isSkipped: false),
               ),
             ),
           ),
