@@ -4,7 +4,9 @@ import 'c_start_interest_screen.dart';  // 追加
 import 'package:cloud_firestore/cloud_firestore.dart'; // Firestore をインポート
 
 class CStartGradeScreen extends StatefulWidget {
-  const CStartGradeScreen({super.key});
+  final String userId;
+
+  const CStartGradeScreen({super.key, required this.userId});
 
   @override
   State<CStartGradeScreen> createState() => _CStartGradeScreenState();
@@ -23,25 +25,16 @@ class _CStartGradeScreenState extends State<CStartGradeScreen> {
   ];
     final TextEditingController nameController = TextEditingController(); // 名前入力用
 
-  Future<void> _saveInfo() async {
-    if (selectedGrade != null && nameController.text.isNotEmpty) {
-      String userId = "user123"; // TODO: 実際は Firebase Authentication から取得
+  Future<void> _saveGrade(String selectedGrade) async {
+  await FirebaseFirestore.instance.collection('users').doc(userId).update({
+    'grade': selectedGrade,
+  });
 
-      await FirebaseFirestore.instance.collection('users').doc(userId).set({
-        'name': nameController.text, // ユーザー名
-        'grade': grades[selectedGrade!], // 学年
-      }, SetOptions(merge: true)); // 既存データを上書きしないよう merge を使用
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const CStartInterestScreen()),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('名前と学年を入力してください')),
-      );
-    }
-  }
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => const CStartInterestScreen()),
+  );
+}
 
   @override
   Widget build(BuildContext context) {

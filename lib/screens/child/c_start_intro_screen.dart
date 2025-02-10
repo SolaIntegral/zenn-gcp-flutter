@@ -1,9 +1,29 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
 import 'c_start_info_screen.dart';  // 追加
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CStartIntroScreen extends StatelessWidget {
   const CStartIntroScreen({super.key});
+
+    @override
+  State<CStartIntroScreen> createState() => _CStartIntroScreenState();
+}
+
+  class _CStartIntroScreenState extends State<CStartIntroScreen> {
+  final String userId = FirebaseAuth.instance.currentUser!.uid;
+
+  Future<void> _markUserAsRegistered() async {
+    await FirebaseFirestore.instance.collection('users').doc(userId).update({
+      'isRegistered': true, // 初回登録完了
+    });
+
+    // 次の画面へ遷移
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const CStartInfoScreen()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,14 +86,8 @@ class CStartIntroScreen extends StatelessWidget {
                 horizontal: screenWidth * 0.1,
               ),
               child: CustomButton(
-                text: 'つぎへ',
-                onPressed: () {
-                  // 次の画面へ遷移する処理
-                   Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const CStartInfoScreen()),
-                  );
-                },
+                text: 'はじめる',
+                onPressed: ()  _markUserAsRegistered,
               ),
             ),
           ],

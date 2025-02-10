@@ -20,25 +20,17 @@ class _CStartInterestScreenState extends State<CStartInterestScreen> {
     'たくさん寝ること',
   ];
 
-  Future<void> _saveInterest() async {
-  if (selectedInterest != null) {
-    String userId = "user123"; // TODO: Firebase Authentication で取得する
-
-      await FirebaseFirestore.instance.collection('users').doc(userId).set({
-        'interest': interests[selectedInterest!], // 興味を保存
-        'isRegistered': 'c_registered', // 初回登録済みフラグ
-      }, SetOptions(merge: true));
+Future<void> _saveInterest(String selectedInterest) async {
+  await FirebaseFirestore.instance.collection('users').doc(userId).update({
+    'interest': selectedInterest,
+    'isRegistered': 'c_registered', // 初回登録済みフラグ
+  });
 
       // ホーム画面へ遷移
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const CHomeScreen()),
       );
-  } else {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('好きなことを選択してください')),
-    );
-  }
 }
 
   @override

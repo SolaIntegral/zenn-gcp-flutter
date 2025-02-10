@@ -23,32 +23,52 @@ class _HomeScreenState extends State<HomeScreen> {
     _fetchUserData();
   }
 
-  Future<void> _fetchUserData() async {
-    String userId = "user123"; // TODO: Firebase Authentication から取得する
+Future<void> _fetchUserData() async {
+  final String userId = FirebaseAuth.instance.currentUser!.uid;
 
+  try {
     DocumentSnapshot userDoc =
         await FirebaseFirestore.instance.collection('users').doc(userId).get();
     DocumentSnapshot charDoc =
         await FirebaseFirestore.instance.collection('character').doc(userId).get();
 
-    if (userDoc.exists && charDoc.exists) {
+    if (userDoc.exists) {
       Map<String, dynamic> userData = userDoc.data() as Map<String, dynamic>;
-      Map<String, dynamic> charData = charDoc.data() as Map<String, dynamic>;
 
       setState(() {
         userName = userData['name'] ?? "なまえ";
 
-        // 育成開始日からの日数を計算
-        Timestamp registeredAt = userData['registeredAt'];
-        DateTime registeredDate = registeredAt.toDate();
-        daysSinceStart = DateTime.now().difference(registeredDate).inDays;
+        // Firestore の `registeredAt` から育成日数を計算
+        if (userData.containsKey('registeredAt')) {
+          Timestamp registeredAt = userData['registeredAt'];
+          DateTime registeredDate = registeredAt.toDate();
+          daysSinceStart = DateTime.now().difference(registeredDate).inDays;
+        } else {
+          daysSinceStart = 1; // デフォルト値
+        }
+      });
+    }
 
-        // 5日ごとにレベルアップ
-        level = (daysSinceStart ~/ 5) + 1;
+    if (charDoc.exists) {
+      Map<String, dynamic> charData = charDoc.data() as Map<String, dynamic>;
+
+      setState(() {
+        // Firestore の `level` を優先
+        level = charData.containsKey('level')
+            ? charData['level']
+            : (daysSinceStart ~/ 5) + 1;
+
+        // 次のレベルアップまでの日数を計算
         daysUntilNextLevel = 5 - (daysSinceStart % 5);
       });
     }
+  } catch (e) {
+    debugPrint("エラー: $e");
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('データ取得に失敗しました。')),
+    );
   }
+}
 
   @override
   Widget build(BuildContext context) {
