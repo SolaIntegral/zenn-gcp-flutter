@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app1/screens/parent/p_home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class PRegisterScreen extends StatefulWidget {
-  const PRegisterScreen({Key? key}) : super(key: key);
+class PRegisterScreen2 extends StatefulWidget {
+  const PRegisterScreen2({Key? key}) : super(key: key);
 
   @override
-  State<PRegisterScreen> createState() => _PRegisterScreenState();
+  State<PRegisterScreen2> createState() => _PRegisterScreen2State();
 }
 
-class _PRegisterScreenState extends State<PRegisterScreen> {
+class _PRegisterScreen2State extends State<PRegisterScreen2> {
   int _currentStep = 0;
 
   // 例として2ステップの登録（ニックネーム登録、生年月日登録）
@@ -35,8 +35,14 @@ class _PRegisterScreenState extends State<PRegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("親登録"),
+        title: const Text(
+          "おうちの人-登録",
+          style:
+              TextStyle(color: Color(0xFF684B09), fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Color(0xFFF2EEE9),
       ),
+      backgroundColor: Color(0xFFF2EEE9),
       body: Stepper(
         currentStep: _currentStep,
         onStepContinue: () async {
