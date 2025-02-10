@@ -1,50 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../widgets/custom_button.dart';
-import '../child/c_home_screen.dart'; // 2回目以降のログイン時の画面
-import '../child/c_start_intro_screen.dart'; // 初回ログイン時の画面
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  Future<void> _login() async {
-    try {
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
-
-      String userId = userCredential.user!.uid;
-
-      // Firestore からユーザー情報を取得
-      DocumentSnapshot userDoc =
-          await FirebaseFirestore.instance.collection('users').doc(userId).get();
-
-      bool isRegistered = userDoc.exists && (userDoc.data() as Map<String, dynamic>)['isRegistered'] == true;
-
-      // 初回登録画面 or ホーム画面へ遷移
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => isRegistered ? const CHomeScreen() : const CStartIntroScreen(),
-        ),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('エラー: ${e.toString()}')),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,17 +13,59 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
-          child: Column(
           children: [
-            TextField(controller: _emailController, decoration: const InputDecoration(labelText: 'メールアドレス')),
-            TextField(controller: _passwordController, decoration: const InputDecoration(labelText: 'パスワード'), obscureText: true),
+            const Text(
+              'ログイン',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.brown),
+            ),
             const SizedBox(height: 20),
-            CustomButton(text: 'ログイン', onPressed: _login),
+
+            // メールアドレス・パスワード
+            _buildTextField('メールアドレスを入力'),
+            _buildTextField('パスワードを入力', isPassword: true),
+
+            const SizedBox(height: 10),
+
+            // 新規登録へのリンク
+            GestureDetector(
+              onTap: () => Navigator.pushNamed(context, '/signup'),
+              child: const Text(
+                '新規登録の方はこちら',
+                style: TextStyle(color: Colors.brown, decoration: TextDecoration.underline),
+              ),
+            ),
+
+            const SizedBox(height: 30),
+
+            // ログインボタン
+            Align(
+              alignment: Alignment.centerRight,
+              child: FloatingActionButton(
+                backgroundColor: const Color(0xFF1EC9A8),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/user_selection');
+                },
+                child: const Icon(Icons.arrow_forward),
+              ),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildTextField(String hintText, {bool isPassword = false}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: TextField(
+        obscureText: isPassword,
+        decoration: InputDecoration(
+          hintText: hintText,
+          filled: true,
+          fillColor: Colors.white,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
+        ),
       ),
     );
   }
 }
- 
