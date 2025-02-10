@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // 追加
+
 
 class CStartInterestScreen extends StatefulWidget {
   const CStartInterestScreen({super.key});
@@ -17,6 +19,22 @@ class _CStartInterestScreenState extends State<CStartInterestScreen> {
     '勉強すること',
     'たくさん寝ること',
   ];
+
+  Future<void> _saveInterest() async {
+  if (selectedInterest != null) {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userInterest', interests[selectedInterest!]); // 興味を保存
+
+    // 設定完了後、isRegisteredを設定して初回ログイン完了
+    await prefs.setString('isRegistered', 'c_registered');
+
+    Navigator.pushReplacementNamed(context, '/c_home_screen'); // 子供用画面へ
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('好きなことを選択してください')),
+    );
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -146,15 +164,7 @@ class _CStartInterestScreenState extends State<CStartInterestScreen> {
               ),
               child: CustomButton(
                 text: 'つぎへ',
-                onPressed: () {
-                  if (selectedInterest != null) {
-                    // 次の画面へ遷移（必要なら追加）
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('好きなことを選択してください')),
-                    );
-                  }
-                },
+                onPressed: _saveInterest,
               ),
             ),
           ),

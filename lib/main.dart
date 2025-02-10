@@ -21,9 +21,10 @@ void main() async {
   } else if (isRegistered == 'c_registered') {
     homeWidget = const CHomeScreen(
       //子供のおかえり画面
-      //TODO:一旦仮置き
-      userName: 'ゲスト',
-      loginDays: 1,
+      // 登録済みのユーザー情報を取得
+     userName : 'ゲスト';
+     loginDays : 1;
+
     );
   } else if (isRegistered == 'p_registered') {
     //親のおかえり画面
