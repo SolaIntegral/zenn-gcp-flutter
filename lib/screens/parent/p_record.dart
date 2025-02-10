@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app1/screens/parent/p_registration_screen_2.dart';
 import 'package:flutter_app1/widgets/custom_base.dart';
 
-class PHomeScreen extends StatelessWidget {
-  const PHomeScreen({super.key});
+class PRecordScreen extends StatelessWidget {
+  const PRecordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return CustomBase(
-      title: 'Home',
+      title: '今日の記録',
       body: Center(
         child: Column(
           children: [
