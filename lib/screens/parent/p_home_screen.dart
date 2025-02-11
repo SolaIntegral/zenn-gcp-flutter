@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app1/screens/parent/p_record.dart';
 import 'package:flutter_app1/widgets/custom_base.dart';
 
+
 class PHomeScreen extends StatelessWidget {
   const PHomeScreen({super.key});
 
@@ -219,6 +220,7 @@ class PHomeScreen extends StatelessWidget {
         ),
       ),
       currentIndex: 1,
+
     );
   }
 }
