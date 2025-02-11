@@ -102,6 +102,7 @@ class _CDay1ScreenState extends State<CDay1Screen> {
                                 : Colors.white,
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(12),
+
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black12,

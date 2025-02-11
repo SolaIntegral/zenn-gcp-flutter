@@ -111,6 +111,7 @@ class _CReportScreenState extends State<CReportScreen> {
                           color: Colors.white,
                           border: Border.all(color: Colors.grey),
                           borderRadius: BorderRadius.circular(12),
+
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black12,

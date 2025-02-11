@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
 
+
 class CStartInterestScreen extends StatefulWidget {
   const CStartInterestScreen({super.key});
 
@@ -17,6 +18,7 @@ class _CStartInterestScreenState extends State<CStartInterestScreen> {
     '勉強すること',
     'たくさん寝ること',
   ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -101,6 +103,7 @@ class _CStartInterestScreenState extends State<CStartInterestScreen> {
                                 : Colors.white,
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(12),
+
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black12,
@@ -146,6 +149,7 @@ class _CStartInterestScreenState extends State<CStartInterestScreen> {
               ),
               child: CustomButton(
                 text: 'つぎへ',
+
                 onPressed: () {
                   if (selectedInterest != null) {
                     // 次の画面へ遷移（必要なら追加）

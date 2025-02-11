@@ -21,6 +21,7 @@ class _CStartGradeScreenState extends State<CStartGradeScreen> {
     '小学6年生',
   ];
 
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -134,6 +135,7 @@ class _CStartGradeScreenState extends State<CStartGradeScreen> {
                             color: Colors.white,
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(12),
+
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black12,
@@ -191,6 +193,7 @@ class _CStartGradeScreenState extends State<CStartGradeScreen> {
               ),
               child: CustomButton(
                 text: 'つぎへ',
+
                 onPressed: () {
                   if (selectedGrade != null) {
                     // 次の画面へ遷移（必要なら追加）
