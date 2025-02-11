@@ -6,6 +6,8 @@ class PWelcomebackScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
         backgroundColor: const Color(0xFF15BBA1),
         body: Center(
@@ -14,12 +16,12 @@ class PWelcomebackScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
+                Text(
                   "おかえりなさい！",
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w900,
-                      fontSize: 40),
+                      fontSize: screenWidth * 0.09),
                 ),
                 const SizedBox(height: 10), // テキストの間隔を追加
 
@@ -42,18 +44,17 @@ class PWelcomebackScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10), // 角丸
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     "Welcome back!→",
                     style: TextStyle(
                         color: Color(0xFF684B09),
                         fontWeight: FontWeight.w900,
-                        fontSize: 25), // 40 → 30 にしてバランス調整
+                        fontSize: screenWidth * 0.05), // 40 → 30 にしてバランス調整
                   ),
                 ),
               ],
             ),
           ),
         ));
-
   }
 }

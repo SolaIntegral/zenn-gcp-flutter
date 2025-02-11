@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app1/screens/parent/p_record.dart';
 import 'package:flutter_app1/widgets/custom_base.dart';
 
-
 class PHomeScreen extends StatelessWidget {
   const PHomeScreen({super.key});
 
@@ -86,7 +85,7 @@ class PHomeScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        "100",
+                        "1",
                         style: TextStyle(
                             color: Color(0xFF684B09),
                             fontSize: 30,
@@ -156,7 +155,7 @@ class PHomeScreen extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "16:30",
+                        "15:45",
                         style: TextStyle(
                             color: Color(0xAA684B09),
                             fontSize: 26,
@@ -220,7 +219,6 @@ class PHomeScreen extends StatelessWidget {
         ),
       ),
       currentIndex: 1,
-
     );
   }
 }
