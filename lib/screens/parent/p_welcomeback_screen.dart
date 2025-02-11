@@ -22,14 +22,7 @@ class PWelcomebackScreen extends StatelessWidget {
                       fontSize: 40),
                 ),
                 const SizedBox(height: 10), // テキストの間隔を追加
-                const Text(
-                  "〇〇さん",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20),
-                  textAlign: TextAlign.center,
-                ),
+
                 const SizedBox(height: 20), // 画像との間隔を調整
                 Image.asset("assets/chara3.png", fit: BoxFit.contain),
                 const SizedBox(height: 20), // ボタンとの間隔を調整
