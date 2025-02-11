@@ -1,47 +1,16 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
 import 'c_day1_screen.dart';  // 遷移先の画面をインポート
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-class CHomeScreen extends StatefulWidget {
-  const CHomeScreen({super.key});
+class CHomeScreen extends StatelessWidget {
+  final String userName;
+  final int loginDays;
 
-  @override
-  State<CHomeScreen> createState() => _CHomeScreenState();
-}
-
-class _CHomeScreenState extends State<CHomeScreen> {
-  String userName = "なまえ";
-  int loginDays = 1;
-  final String userId = FirebaseAuth.instance.currentUser!.uid;
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchUserData();
-  }
-
-  Future<void> _fetchUserData() async {
-    try {
-      DocumentSnapshot userDoc =
-          await FirebaseFirestore.instance.collection('users').doc(userId).get();
-
-      if (userDoc.exists) {
-        Map<String, dynamic> userData = userDoc.data() as Map<String, dynamic>;
-
-        setState(() {
-          userName = userData['name'] ?? "なまえ";
-
-          // Firestore の `registeredAt` から育成日数を計算
-          Timestamp registeredAt = userData['registeredAt'];
-          DateTime registeredDate = registeredAt.toDate();
-          loginDays = DateTime.now().difference(registeredDate).inDays + 1;
-        });
-      }
-    } catch (e) {
-      debugPrint("エラー: $e");
-    }
-  }
+  const CHomeScreen({
+    super.key,
+    required this.userName,
+    required this.loginDays,
+  });
 
   @override
   Widget build(BuildContext context) {

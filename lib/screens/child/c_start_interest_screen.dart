@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; // Firestore を追加
-import '../home/c_home_screen.dart'; // 次の画面
 
 class CStartInterestScreen extends StatefulWidget {
   const CStartInterestScreen({super.key});
@@ -19,19 +17,6 @@ class _CStartInterestScreenState extends State<CStartInterestScreen> {
     '勉強すること',
     'たくさん寝ること',
   ];
-
-Future<void> _saveInterest(String selectedInterest) async {
-  await FirebaseFirestore.instance.collection('users').doc(userId).update({
-    'interest': selectedInterest,
-    'isRegistered': 'c_registered', // 初回登録済みフラグ
-  });
-
-      // ホーム画面へ遷移
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const CHomeScreen()),
-      );
-}
 
   @override
   Widget build(BuildContext context) {
@@ -116,11 +101,11 @@ Future<void> _saveInterest(String selectedInterest) async {
                                 : Colors.white,
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(12),
-                            boxShadow: const [
+                            boxShadow: [
                               BoxShadow(
                                 color: Colors.black12,
                                 blurRadius: 4,
-                                offset: Offset(2, 2),
+                                offset: const Offset(2, 2),
                               ),
                             ],
                           ),
@@ -161,7 +146,15 @@ Future<void> _saveInterest(String selectedInterest) async {
               ),
               child: CustomButton(
                 text: 'つぎへ',
-                onPressed: _saveInterest,
+                onPressed: () {
+                  if (selectedInterest != null) {
+                    // 次の画面へ遷移（必要なら追加）
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('好きなことを選択してください')),
+                    );
+                  }
+                },
               ),
             ),
           ),

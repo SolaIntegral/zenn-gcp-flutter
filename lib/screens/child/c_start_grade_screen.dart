@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
 import 'c_start_interest_screen.dart';  // 追加
-import 'package:cloud_firestore/cloud_firestore.dart'; // Firestore をインポート
 
 class CStartGradeScreen extends StatefulWidget {
-  final String userId;
-
-  const CStartGradeScreen({super.key, required this.userId});
+  const CStartGradeScreen({super.key});
 
   @override
   State<CStartGradeScreen> createState() => _CStartGradeScreenState();
@@ -23,18 +20,6 @@ class _CStartGradeScreenState extends State<CStartGradeScreen> {
     '小学5年生',
     '小学6年生',
   ];
-    final TextEditingController nameController = TextEditingController(); // 名前入力用
-
-  Future<void> _saveGrade(String selectedGrade) async {
-  await FirebaseFirestore.instance.collection('users').doc(userId).update({
-    'grade': selectedGrade,
-  });
-
-  Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(builder: (context) => const CStartInterestScreen()),
-  );
-}
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +98,6 @@ class _CStartGradeScreenState extends State<CStartGradeScreen> {
                     ),
                     const SizedBox(height: 8),
                     TextField(
-                      controller: nameController, // コントローラーを適用
                       decoration: InputDecoration(
                         hintText: '名前を入力してください',
                         filled: true,
@@ -150,11 +134,11 @@ class _CStartGradeScreenState extends State<CStartGradeScreen> {
                             color: Colors.white,
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(12),
-                            boxShadow: const [
+                            boxShadow: [
                               BoxShadow(
                                 color: Colors.black12,
                                 blurRadius: 4,
-                                offset: Offset(2, 2),
+                                offset: const Offset(2, 2),
                               ),
                             ],
                           ),
@@ -207,7 +191,20 @@ class _CStartGradeScreenState extends State<CStartGradeScreen> {
               ),
               child: CustomButton(
                 text: 'つぎへ',
-                onPressed: _saveInfo,
+                onPressed: () {
+                  if (selectedGrade != null) {
+                    // 次の画面へ遷移（必要なら追加）
+                    // 次の画面へ遷移する処理
+                   Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const CStartInterestScreen()),
+                  );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('がくねんを選択してください')),
+                    );
+                  }
+                },
               ),
             ),
           ),

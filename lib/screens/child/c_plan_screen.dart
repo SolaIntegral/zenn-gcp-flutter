@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'c_tohome_screen.dart'; // 次の画面へ遷移
 
 class CPlanScreen extends StatefulWidget {
   const CPlanScreen({super.key});
@@ -12,7 +10,6 @@ class CPlanScreen extends StatefulWidget {
 
 class _CPlanScreenState extends State<CPlanScreen> {
   int? selectedPlan; // 選択された予定を保持
-  final String userId = "user123"; // TODO: Firebase Authentication から取得する
 
   final List<String> plans = [
     '家にいる',
@@ -20,21 +17,6 @@ class _CPlanScreenState extends State<CPlanScreen> {
     '友達と遊びに行く',
     'よくなかった',
   ];
-
-  // Firestore に予定データを保存
-Future<void> _savePlan() async {
-  await FirebaseFirestore.instance.collection('plans').add({
-    'userId': userId,
-    'date': FieldValue.serverTimestamp(),
-    'selectedPlan': selectedPlan != null ? plans[selectedPlan!] : "なし",
-  });
-
-  Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(builder: (context) => const CToHomeScreen()),
-  );
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -119,11 +101,11 @@ Future<void> _savePlan() async {
                                 : Colors.white,
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(12),
-                            boxShadow: const [
+                            boxShadow: [
                               BoxShadow(
                                 color: Colors.black12,
                                 blurRadius: 4,
-                                offset: Offset(2, 2),
+                                offset: const Offset(2, 2),
                               ),
                             ],
                           ),
@@ -175,7 +157,15 @@ Future<void> _savePlan() async {
               ),
               child: CustomButton(
                 text: 'つぎへ',
-                onPressed: _savePlan,
+                onPressed: () {
+                  if (selectedPlan != null) {
+                    // 次の画面へ遷移（必要なら追加）
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('このあとの予定を選択してください')),
+                    );
+                  }
+                },
               ),
             ),
           ),
