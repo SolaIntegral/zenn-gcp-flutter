@@ -7,38 +7,16 @@ class PEventScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomBase(
+    return const CustomBase(
       title: 'イベント情報',
       body: Center(
-        child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const PRegisterScreen2()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFFEDE6B), // 修正: 正しい背景色の指定方法
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 50, vertical: 15), // ボタンのサイズ調整
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10), // 角丸
-                  ),
-                  elevation: 5),
-              child: const Text(
-                "NEXT→",
-                style: TextStyle(
-                    color: Color(0xFF666666),
-                    fontWeight: FontWeight.w900,
-                    fontSize: 30), // 40 → 30 にしてバランス調整
-              ),
-            ),
-          ],
-        ),
-      ),
+          child: Text(
+        "Coming soon...!",
+        style: TextStyle(
+            color: Color(0xFF684B09),
+            fontSize: 20,
+            fontWeight: FontWeight.w600),
+      )),
       currentIndex: 2,
     );
   }
