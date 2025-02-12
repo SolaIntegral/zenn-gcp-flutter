@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app1/screens/auth/role_selection_screen.dart';
 import 'package:flutter_app1/screens/parent/p_registration_screen_2.dart';
 
 class PRegisterScreen1 extends StatelessWidget {
@@ -6,13 +7,29 @@ class PRegisterScreen1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.brown, size: 30),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => RoleSelectionScreen()),
+            );
+          },
+        ),
+      ),
       backgroundColor: const Color(0xFF15BBA1),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(40.0),
+          padding: EdgeInsets.symmetric(
+              horizontal: screenHeight * 0.06, vertical: screenHeight * 0.02),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
                 "こんにちは！",
@@ -30,9 +47,9 @@ class PRegisterScreen1 extends StatelessWidget {
                     fontSize: 20),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 20), // 画像との間隔を調整
+              // const SizedBox(height: 20), // 画像との間隔を調整
               Image.asset("assets/chara2.png", fit: BoxFit.contain),
-              const SizedBox(height: 20), // ボタンとの間隔を調整
+              // const SizedBox(height: 20), // ボタンとの間隔を調整
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(

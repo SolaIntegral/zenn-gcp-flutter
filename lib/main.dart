@@ -24,7 +24,6 @@ void main() async {
     homeWidget = const RoleSelectionScreen();
   } else if (isRegistered == 'c_registered') {
     homeWidget = const CHomeScreen(
-
       //子供のおかえり画面
       // 登録済みのユーザー情報を取得
       userName: 'ゲスト',
@@ -49,7 +48,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'ユーザ選択アプリ',
+      title: '見守りアプリ',
       debugShowCheckedModeBanner: false,
       home: homeWidget,
       // ここで名前付きルートを定義
@@ -59,7 +58,6 @@ class MyApp extends StatelessWidget {
             const PHomeScreen(), // ここでは現在のホーム画面を再表示（必要に応じて適切な画面を指定）
         '/event': (context) => const PEventScreen(), // 例：親用イベント画面
       },
-
     );
   }
 }

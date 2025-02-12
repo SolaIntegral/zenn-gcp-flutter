@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app1/screens/auth/role_selection_screen.dart';
 import '../../widgets/custom_button.dart';
 import 'c_start_info_screen.dart'; // 追加
 
@@ -18,7 +19,12 @@ class CStartIntroScreen extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.brown, size: 30),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => RoleSelectionScreen()),
+            );
+          },
         ),
       ),
       body: SafeArea(
