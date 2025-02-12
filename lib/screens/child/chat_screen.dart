@@ -21,7 +21,8 @@ class ChatScreen extends StatelessWidget {
 
           // チャットバブル
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05, vertical: screenHeight * 0.02),
+            padding: EdgeInsets.symmetric(
+                horizontal: screenWidth * 0.05, vertical: screenHeight * 0.02),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Container(
@@ -33,7 +34,10 @@ class ChatScreen extends StatelessWidget {
                 ),
                 child: const Text(
                   '今日はどんなことをした？',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.brown),
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.brown),
                 ),
               ),
             ),
@@ -41,7 +45,7 @@ class ChatScreen extends StatelessWidget {
 
           // キャラクター画像
           Image.asset(
-            'lib/assets/chara1.png',
+            'assets/chara1.png',
             height: screenHeight * 0.2,
           ),
 
@@ -74,7 +78,7 @@ class ChatScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.02),
-                
+
                 // 選択ボタン
                 Wrap(
                   spacing: screenWidth * 0.05,

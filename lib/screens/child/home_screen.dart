@@ -28,7 +28,7 @@ class HomeScreen extends StatelessWidget {
               backgroundColor: Colors.amber,
               radius: screenWidth * 0.2,
               child: Image.asset(
-                'lib/assets/chara1.png',
+                'assets/chara1.png',
                 height: screenHeight * 0.2,
               ),
             ),
@@ -37,7 +37,8 @@ class HomeScreen extends StatelessWidget {
           // 名前の表示
           const Text(
             'なまえ',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.brown),
+            style: TextStyle(
+                fontSize: 24, fontWeight: FontWeight.bold, color: Colors.brown),
           ),
 
           SizedBox(height: screenHeight * 0.02),
@@ -78,7 +79,10 @@ class HomeScreen extends StatelessWidget {
             padding: EdgeInsets.only(bottom: screenHeight * 0.02),
             child: const Text(
               '育てたことのあるキャラクター',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.brown),
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.brown),
             ),
           ),
         ],
@@ -94,11 +98,13 @@ class HomeScreen extends StatelessWidget {
         children: [
           Text(
             leftText,
-            style: const TextStyle(fontSize: 16, color: Colors.brown, fontWeight: FontWeight.w500),
+            style: const TextStyle(
+                fontSize: 16, color: Colors.brown, fontWeight: FontWeight.w500),
           ),
           Text(
             rightText,
-            style: const TextStyle(fontSize: 18, color: Colors.brown, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+                fontSize: 18, color: Colors.brown, fontWeight: FontWeight.bold),
           ),
         ],
       ),

@@ -16,7 +16,8 @@ class CToHomeScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.brown, size: screenWidth * 0.08),
+          icon: Icon(Icons.arrow_back,
+              color: Colors.brown, size: screenWidth * 0.08),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -33,7 +34,7 @@ class CToHomeScreen extends StatelessWidget {
                   children: [
                     // キャラクター画像
                     Image.asset(
-                      'lib/assets/chara1.png',
+                      'assets/chara1.png',
                       height: screenHeight * 0.3,
                     ),
                     SizedBox(height: screenHeight * 0.02),
@@ -52,7 +53,8 @@ class CToHomeScreen extends StatelessWidget {
                     // 日数表示
                     Container(
                       padding: EdgeInsets.symmetric(
-                          vertical: screenHeight * 0.02, horizontal: screenWidth * 0.1),
+                          vertical: screenHeight * 0.02,
+                          horizontal: screenWidth * 0.1),
                       decoration: BoxDecoration(
                         color: const Color(0xFF1EC9A8),
                         borderRadius: BorderRadius.circular(20),
