@@ -7,7 +7,7 @@ class PEventScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomBase(
+    return const CustomBase(
       title: 'イベント情報',
       body: Center(
           child: Text(
