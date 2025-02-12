@@ -13,15 +13,16 @@ class PRegisterScreen1 extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.brown, size: 30),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => RoleSelectionScreen()),
-            );
-          },
-        ),
+        leading: null,
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back, color: Colors.brown, size: 30),
+        //   onPressed: () {
+        //     Navigator.push(
+        //       context,
+        //       MaterialPageRoute(builder: (context) => RoleSelectionScreen()),
+        //     );
+        //   },
+        // ),
       ),
       backgroundColor: const Color(0xFF15BBA1),
       body: Center(
