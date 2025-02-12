@@ -124,11 +124,11 @@ class PHomeScreen extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: screenWidth * 0.08),
-                        child: const Text(
+                        child: Text(
                           "今日の帰宅時間",
                           style: TextStyle(
                               color: Color(0xFF684B09),
-                              fontSize: 16,
+                              fontSize: screenWidth * 0.042,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -136,7 +136,7 @@ class PHomeScreen extends StatelessWidget {
                         "16:30",
                         style: TextStyle(
                             color: Color(0xFF684B09),
-                            fontSize: 48,
+                            fontSize: screenWidth * 0.1,
                             fontWeight: FontWeight.w400),
                       ),
                     ],
@@ -146,11 +146,11 @@ class PHomeScreen extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: screenWidth * 0.11),
-                        child: const Text(
+                        child: Text(
                           "前回の帰宅時間",
                           style: TextStyle(
                               color: Color(0xAA684B09),
-                              fontSize: 14,
+                              fontSize: screenWidth * 0.038,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -158,7 +158,7 @@ class PHomeScreen extends StatelessWidget {
                         "15:45",
                         style: TextStyle(
                             color: Color(0xAA684B09),
-                            fontSize: 26,
+                            fontSize: screenWidth * 0.07,
                             fontWeight: FontWeight.w300),
                       ),
                     ],
@@ -190,27 +190,28 @@ class PHomeScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.08),
-                        child: const Text(
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
                           "塾に行く",
                           style: TextStyle(
                               color: Color(0xFF684B09),
-                              fontSize: 18,
+                              fontSize: screenWidth * 0.044,
                               fontWeight: FontWeight.bold),
                         ),
-                      ),
-                      Text(
-                        "16:30に入力されました",
-                        style: TextStyle(
-                            color: Color(0xFF684B09),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400),
-                      ),
-                    ],
+                        Text(
+                          "16:30に入力されました",
+                          style: TextStyle(
+                              color: Color(0xFF684B09),
+                              fontSize: screenWidth * 0.034,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
